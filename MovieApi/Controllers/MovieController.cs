@@ -17,6 +17,13 @@ namespace MovieApi.Controllers
         {
             this.service = new MovieService();
         }
+        [HttpGet]
+        [Route("GetByActor/{director}")]
+        public IActionResult GetByDirector(string dir)
+        {
+            Movie Movie = s.GetByDirector(dir);
+            return StatusCode(200, Movie);
+        }
         [Route("GetAllMovies")]
         [HttpGet]
         public IActionResult GetAll()
@@ -45,13 +52,15 @@ namespace MovieApi.Controllers
             Movie Movie = s.GetByLanguage(lan);
             return StatusCode(200, Movie);
         }
-        [HttpGet]
-        [Route("GetByActor/{director}")]
-        public IActionResult GetByDirector(string dir)
+        
+        [HttpPut]
+        [Route("Edit")]
+        public IActionResult Edit(Movie Movie)
         {
-            Movie Movie = s.GetByDirector(dir);
+            s.Edit(Movie);
             return StatusCode(200, Movie);
         }
+
         [HttpPost]
         [Route("Add")]
         public IActionResult Add(Movie Movie)
@@ -64,15 +73,8 @@ namespace MovieApi.Controllers
         public IActionResult Delete(int id)
         {
             s.Delete(id);
-            return StatusCode(200, "Movie with " + id + " Deleted");
+            return StatusCode(200,id);
         }
-        [HttpPut]
-        [Route("Edit")]
-        public IActionResult Edit(Movie Movie)
-        {
-            s.Edit(Movie);
-            return StatusCode(200, Movie);
-        }
-
+        
     }
 }
